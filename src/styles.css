@@ -1,0 +1,457 @@
+/* ==========================================================================
+   CSS GLOBAL - ESTILO PRÁTICAS DE API
+   Organizado de forma didática para o 3º período de ADS
+   ========================================================================== */
+
+/* 1. Variáveis CSS (Facilitam a alteração de cores e fontes em todo o site) */
+:root {
+  --primary-color: #2563eb;       /* Azul principal */
+  --primary-hover: #1d4ed8;       /* Azul escuro para hover */
+  --primary-light: #eff6ff;       /* Azul bem claro para elementos selecionados */
+  --text-color: #1f2937;          /* Cinza escuro para texto principal */
+  --text-muted: #6b7280;          /* Cinza médio para textos secundários */
+  --bg-color: #f8fafc;            /* Fundo da tela */
+  --card-bg: #ffffff;             /* Fundo dos cartões (branco) */
+  --border-color: #e2e8f0;        /* Cor das bordas e divisores */
+  --error-color: #dc2626;         /* Vermelho para mensagens de erro */
+  --error-bg: #fef2f2;            /* Fundo para caixas de erro */
+  --shadow-light: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05); /* Sombra suave */
+  --shadow-medium: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* Sombra hover */
+  --transition-speed: 0.3s;       /* Velocidade das transições (hover, click) */
+}
+
+/* 2. Reset básico de estilos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 3. Estrutura do App (Layout base) */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ocupa no mínimo a altura total da tela */
+}
+
+.app-header {
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem 2rem;
+  box-shadow: var(--shadow-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.header-content h1 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.academic-badge {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+/* 4. Navegação por Abas (Tabs) */
+.tab-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.tab-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+}
+
+.tab-btn:hover {
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.tab-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* 5. Área de Conteúdo Principal */
+.app-main {
+  flex: 1; /* Ocupa todo o espaço vertical restante */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* 6. Estados Globais: Carregamento e Erro */
+.status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.spinner {
+  border: 4px solid var(--border-color);
+  border-left-color: var(--primary-color);
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.status-container.erro {
+  border-color: var(--error-color);
+  background-color: var(--error-bg);
+}
+
+.erro-mensagem {
+  color: var(--error-color);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.btn-recarregar {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background var(--transition-speed);
+}
+
+.btn-recarregar:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   ATIVIDADE 1 — USUÁRIOS
+   ========================================================================== */
+
+.usuarios-page-container {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr; /* Duas colunas: Lista (1/3) e Detalhes (1.5/3) */
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Lista de Usuários */
+.lista-usuarios-secao h2, 
+.galeria-container h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+
+.lista-usuarios-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* CardUsuario.tsx */
+.card-usuario {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: var(--shadow-light);
+  transition: all var(--transition-speed) ease;
+}
+
+.card-usuario h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Efeito Hover do Card (Pointer cursor e elevação leve) */
+.card-usuario:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Card Selecionado (Destaque visual) */
+.card-usuario.selected {
+  background-color: var(--primary-light);
+  border-color: var(--primary-color);
+  border-left: 5px solid var(--primary-color);
+}
+
+/* DetalhesUsuario.tsx */
+.detalhes-usuario-secao {
+  position: sticky;
+  top: 6.5rem; /* Fixa o painel de detalhes na tela ao rolar a lista */
+}
+
+.detalhes-usuario-container {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--shadow-light);
+}
+
+.detalhes-usuario-container h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--primary-light);
+  padding-bottom: 0.5rem;
+}
+
+.detalhes-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.avatar-placeholder {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.username {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.detalhes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detalhe-item {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.detalhe-item strong {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.detalhe-item span {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.detalhe-item a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.detalhe-item a:hover {
+  text-decoration: underline;
+}
+
+/* Estado de Detalhes sem seleção */
+.detalhes-usuario-vazio {
+  background-color: var(--card-bg);
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   ATIVIDADE 2 — GALERIA DE FOTOS
+   ========================================================================== */
+
+.galeria-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.galeria-container h2 {
+  margin-bottom: 0.25rem;
+}
+
+.subtitulo {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* Grid Responsivo para as Fotos */
+.fotos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Foto Card */
+.foto-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden; /* Corta a imagem caso passe das bordas arredondadas */
+  box-shadow: var(--shadow-light);
+  transition: all var(--transition-speed) ease;
+}
+
+/* Efeito de elevação leve no card de foto */
+.foto-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.foto-imagem-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Garante que a imagem seja perfeitamente quadrada */
+  background-color: #f1f5f9;
+  overflow: hidden;
+}
+
+.foto-imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Faz a imagem cobrir todo o espaço sem distorcer */
+  transition: transform var(--transition-speed) ease;
+}
+
+/* Efeito de zoom muito leve na imagem ao passar o mouse */
+.foto-card:hover .foto-imagem {
+  transform: scale(1.03);
+}
+
+.foto-conteudo {
+  padding: 1rem;
+}
+
+.foto-id {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  background-color: var(--primary-light);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.foto-titulo {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color);
+  white-space: nowrap;      /* Impede o título de quebrar em muitas linhas */
+  overflow: hidden;         /* Esconde o texto que ultrapassar */
+  text-overflow: ellipsis;  /* Adiciona "..." ao final do texto cortado */
+}
+
+/* ==========================================================================
+   RODAPÉ
+   ========================================================================== */
+.app-footer {
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.copyright {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (Media Queries)
+   ========================================================================== */
+
+/* Telas menores (Mobile e Tablets deitados) */
+@media (max-width: 768px) {
+  .usuarios-page-container {
+    grid-template-columns: 1fr; /* Muda para uma coluna única (pilha) */
+    gap: 1.5rem;
+  }
+
+  .detalhes-usuario-secao {
+    position: static; /* Desativa o painel fixado no topo */
+  }
+
+  .tab-navigation {
+    flex-direction: column; /* Empilha os botões de abas */
+    gap: 0.5rem;
+  }
+
+  .tab-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .fotos-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas no mobile horizontal/tablet */
+  }
+}
+
+/* Telas muito pequenas (Celulares verticais) */
+@media (max-width: 480px) {
+  .fotos-grid {
+    grid-template-columns: 1fr; /* 1 coluna em celulares muito pequenos */
+  }
+  
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+}
